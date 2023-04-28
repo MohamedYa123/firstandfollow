@@ -18,6 +18,9 @@ public class JavaApplication1 {
     public static void main(String[] args){
         ArrayList questionsfirst=new ArrayList();
         ArrayList solutionsfirst=new ArrayList();
+        ArrayList questionsfollow=new ArrayList();
+        ArrayList solutionsfollow=new ArrayList();
+        
         //1
         questionsfirst.add("S; T; L#a; b; c; d; i#S/ScT, T; T/aSb, iaLb, e; L/SdL,S");
         solutionsfirst.add("S/acei;T/aei;L/acdei");
@@ -37,6 +40,7 @@ public class JavaApplication1 {
         questionsfirst.add("S;W;G;A;D;C;P#f;h;l;o;q;s;t#S/A,DPS,DqDDq,qAlS,qDPPo;W/e,lSD,tCShP;G/C,G,S,sDC,sS;A/fPlDf,o;D/PS,WAPs,e,oW,qD;C/G,PDP,PW,W;P/o,q");
         solutionsfirst.add("S/floqt;W/elt;G/efloqst;A/fo;D/efloqt;C/efloqst;P/oq");
         
+
         int score=0;
         for(int i=0;i<questionsfirst.size();i++){
             System.out.println("\r\nTest point : "+(i+1)+"\r\n");
@@ -45,7 +49,38 @@ public class JavaApplication1 {
                 score++;
             }
         }
-        System.out.println("\r\nScore : "+score+" / "+questionsfirst.size());
+        System.out.println("\r\nfirst Score : "+score+" / "+questionsfirst.size());
+
+        //follow
+        //1
+        questionsfollow.add("S; T; L#a; b; c; d; i#S/ScT, T; T/aSb, iaLb, e; L/SdL,S");
+        solutionsfollow.add("S/$bcd;T/$bcd;L/b");
+        //2
+        questionsfollow.add("S;Z;I;P;B;J;W#b;f;i;m;n;p;s#S/PZb,S,iBbB;Z/II,If,P;I/B,JZPP,SPnJS,SWsI,bBPb,iB;P/JWWfP,S,Ss,e;B/e,pBPBb,sSP;J/BmPZ,Z,iP;W/bZ,mPnWb,pWBfB");
+        solutionsfollow.add("S/$bfimnps;Z/bfimps;I/bfimps;P/$bfimnps;B/$bfimnps;J/bfimps;W/bfmps");
+        //3
+        questionsfollow.add("S;E;Q;N;C;F;Y#f;h;p;r;u;w#S/S,SE,SwFh,Y,rCr;E/CS,e,fCp;Q/NES,S,YCEwF,e;N/C,ChSuY,EhY,Q,QhEN,hN,rQCS;C/FNC,N,Q,SE,YrFp,pSSQ;F/FrCE,SEpC;Y/FpFYE,YFwE");
+        solutionsfollow.add("S/$fhpruw;E/$fhpruw;Q/fhprw;N/fhprw;C/fhprw;F/fhprw;Y/$fhpruw");
+        //4
+        questionsfollow.add("S;O;H;D;Z;X#a;k;p;s;t;w;x#S/SkSwO,pO,pZSt,tO;O/SOa,Z,e,sSp;H/OXt,XOD,ZOkOO,Zx,e,kZ;D/H,OaHk,S,SD,Z,ZkO,e,sDH;Z/O,Z,kXpO,x;X/HaZ,O,SXSH,SZ,pDaH,pDs");
+        solutionsfollow.add("S/$akpstwx;O/$akpstwx;H/akpstx;D/akpstx;Z/$akpstwx;X/akpstx");
+        //5
+        questionsfollow.add("S;K;D;I;M;L#a;d;g;x;y#S/L,S,SDxS;K/D,Ly,gMgSK;D/K,KdL,e,gIxLS;I/DgS,K,S,SaS,aDSI,aDSL,gSyL;M/D,DIaIM,IIdMS,e,x;L/SaDL,SgDL,xDaDg");
+        solutionsfollow.add("S/$adgxy;K/adgx;D/adgx;I/adgx;M/gx;L/$adgxy");
+        //6
+        questionsfollow.add("S;W;G;A;D;C;P#f;h;l;o;q;s;t#S/A,DPS,DqDDq,qAlS,qDPPo;W/e,lSD,tCShP;G/C,G,S,sDC,sS;A/fPlDf,o;D/PS,WAPs,e,oW,qD;C/G,PDP,PW,W;P/o,q");
+        solutionsfollow.add("S/$fhloqst;W/floqst;G/floqt;A/$fhloqst;D/floqst;C/floqt;P/floqst");
+       
+        
+        score=0;
+        for(int i=0;i<questionsfollow.size();i++){
+            System.out.println("\r\nTest point : "+(i+1)+"\r\n");
+            var r=readfollow((String)questionsfollow.get(i),(String)solutionsfollow.get(i));
+            if(r){
+                score++;
+            }
+        }
+        System.out.println("\r\nfollow Score : "+score+" / "+questionsfollow.size());
        
     }
     static boolean readfirst(String question,String solution){
@@ -65,5 +100,21 @@ public class JavaApplication1 {
             return false;
         }
     }
-    
+    static boolean readfollow(String question,String solution){
+        
+        System.out.println("\r\n");
+        CfgFirstFollow cfg= new CfgFirstFollow(question);
+		String a= cfg.follow();
+        System.out.println("real ans : "+solution);
+		System.out.println("\r\n\r\n");
+        System.out.println("hat  ans : "+ a);
+		if(solution.equals(a)){
+            System.out.println("\r\n** Matched ^_^ **\r\n");
+            return true;
+        }
+        else{
+            System.out.println("\r\n** Not Matched :( **\r\n");
+            return false;
+        }
+    }
 }
