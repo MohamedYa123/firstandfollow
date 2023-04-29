@@ -219,6 +219,9 @@ public class CfgFirstFollow {
                             ans=smartmerge(ans,v);
                             h=h.substring(inx+1);
                             inx=h.indexOf(s);
+                             if(!(inx<h.length()-1)){
+                            ans=smartmerge(ans,followofvale(leftsideVariables.get(ii),false,false));
+                            }
                             }
                         }
                         ii++;
